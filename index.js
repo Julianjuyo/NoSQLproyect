@@ -2,6 +2,11 @@ const { response } = require('express');
 const express = require('express');
 const { request } = require('http');
 
+require('dotenv').config();
+
+require('./conf/database');
+
+
 const app = express()
 
 app.get('/', (request,response) =>{
