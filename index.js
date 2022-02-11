@@ -97,12 +97,7 @@ app.put('/countries/:id',async (request,response) => {
 app.get('/countriesNumber', async (request,response)=>{
 
     const countryId = request.params.id;
-    const countries = await CountryModel.find({
-    },{
-        "COUNT(*)":1
-    });
-    var numberOfCountries = countries.length
-
+    const countries = await CountryModel.count();
     response.status(200).json(countries)
 
 });
@@ -113,11 +108,10 @@ app.get('/countriesStart/:id', async (request,response)=>{
 
     const countryId = request.params.id;
 
-    const countries = await CountryModel.find();
-
-
-    for(var i = 0; i < countries.length; i++) {
-        var obj = countries[i];}
+    const countries = await CountryModel.find({
+        
+        name: { '$regex': '(\s+'+countryId+'|^'+countryId+')', '$options': 'i' }}
+    , {});
 
     response.status(200).json(countries)
 
